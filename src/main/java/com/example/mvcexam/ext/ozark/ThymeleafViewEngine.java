@@ -13,6 +13,7 @@ import javax.mvc.engine.ViewEngineException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.glassfish.ozark.engine.ViewEngineBase;
 import org.glassfish.ozark.engine.ViewEngineConfig;
 import org.thymeleaf.TemplateEngine;
@@ -22,31 +23,36 @@ import org.thymeleaf.context.WebContext;
  *
  * @author hondou.atsushi
  */
+@Slf4j
 @ApplicationScoped
 public class ThymeleafViewEngine extends ViewEngineBase {
 
-	@Inject
-	private ServletContext servletContext;
+    @Inject
+    private ServletContext servletContext;
 
-	@Inject
-	@ViewEngineConfig
-	private TemplateEngine engine;
+    @Inject
+    @ViewEngineConfig
+    private TemplateEngine engine;
 
-	@Override
-	public boolean supports(String view) {
-		return view.endsWith(".html");
-	}
+    @Override
+    public boolean supports(String view) {
+        return view.endsWith(".html");
+    }
 
-	@Override
-	public void processView(ViewEngineContext context) throws ViewEngineException {
-		try {
-			HttpServletRequest request = context.getRequest();
-			HttpServletResponse response = context.getResponse();
-			WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-			ctx.setVariables(context.getModels());
-			engine.process(resolveView(context), ctx, response.getWriter());
-		} catch (IOException e) {
-			throw new ViewEngineException(e);
-		}
-	}
+    @Override
+    public void processView(ViewEngineContext context) throws ViewEngineException {
+        try {
+            HttpServletRequest request = context.getRequest();
+            HttpServletResponse response = context.getResponse();
+            WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+            ctx.setVariables(context.getModels());
+            
+            // Don't add prefix to the URL of the template.
+            // For more details, see DefaultTemplateEngineProducer.java
+            engine.process(context.getView() /* resolveView(context) */
+                    , ctx, response.getWriter());
+        } catch (IOException e) {
+            throw new ViewEngineException(e);
+        }
+    }
 }
