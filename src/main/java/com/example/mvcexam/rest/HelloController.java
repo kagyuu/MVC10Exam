@@ -43,13 +43,15 @@ public class HelloController {
 
     /**
      * Retrieves representation of an instance of com.example.mvcexam.rest.ViewResource
-     * @param pageid
      * @return an instance of java.lang.String
      */
     @GET
     public String helloMVC() {
         log.info("MVC1.0 was called!");
         helloBean.setName("Cathy");
+        // MVC1.0+Thymeleaf3 の規格上は、テンプレートから CDI を参照できるはずだけど
+        // 現時点で models に格納した bean しか参照できない
+        // それはそれで (コードの統制上) いいかもしれない。
         models.put("helloBean", helloBean);
         return "hello.html";
     }
