@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * An example for the MVC1.0m2 on the Glassfish 4.1.2 JEE7
  */
 package com.example.mvcexam.rest;
 
@@ -23,7 +21,7 @@ import javax.ws.rs.core.UriInfo;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- *
+ * REST Web Service
  * @author hondou.atsushi
  */
 @Controller

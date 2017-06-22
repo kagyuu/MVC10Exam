@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * An example for the MVC1.0m2 on the Glassfish 4.1.2 JEE7
  */
 package com.example.mvcexam.ext.ozark;
 
@@ -14,7 +12,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 /**
- *
+ * Bind Thymeleaf3 to MVC1.0.
  * @author hondou.atsushi
  */
 @Dependent
